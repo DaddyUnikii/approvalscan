@@ -53,6 +53,11 @@ approvalscan 0xYourWallet --fail-on high         # exit 2 if anything is HIGH (C
 ETHERSCAN_API_KEY=xxx approvalscan 0xYourWallet  # full history on every chain
 ```
 
+## Run it from your phone (GitHub Actions)
+
+No laptop needed. Fork or use this repo → **Actions** → **Scan wallet** → **Run workflow**, paste your address and pick chains.
+The risk table shows up in the run's **Summary** page. Add an `ETHERSCAN_API_KEY` repo secret for full history on every chain.
+
 ## How it works
 
 1. **History** — pulls `Approval` and `ApprovalForAll` events where you are the owner. Best source first:
