@@ -1,0 +1,31 @@
+name: Scan wallet
+# Run from the Actions tab (works from your phone): pick a wallet + chains, read the report in the run summary.
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: Wallet address to scan
+        required: true
+      chains:
+        description: "Chains, comma separated (bsc, eth, base, arb, op, polygon or all)"
+        default: bsc
+      days:
+        description: Days of history when only RPC is available
+        default: "3"
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Scan approvals
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+          ADDRESS: ${{ inputs.address }}
+          CHAINS: ${{ inputs.chains }}
+          DAYS: ${{ inputs.days }}
+        run: |
+          node bin/approvalscan.js "$ADDRESS" -c "$CHAINS" -d "$DAYS" --markdown | tee report.md
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
