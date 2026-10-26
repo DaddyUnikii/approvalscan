@@ -1,0 +1,13 @@
+{
+  "name": "approvalscan",
+  "version": "0.1.0",
+  "description": "Zero-dependency CLI that finds every token and NFT approval your wallet still has live on EVM chains, ranks them by risk, and shows what to revoke.",
+  "type": "module",
+  "bin": { "approvalscan": "bin/approvalscan.js" },
+  "main": "src/scan.js",
+  "scripts": { "test": "node --test test/approvalscan.test.js" },
+  "engines": { "node": ">=18" },
+  "keywords": ["evm", "approvals", "allowance", "revoke", "security", "bsc", "ethereum", "nft", "cli", "web3"],
+  "author": "Unikii (https://github.com/DaddyUnikii)",
+  "license": "MIT"
+}
