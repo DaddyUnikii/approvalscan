@@ -4,6 +4,9 @@ import { makeRpc } from '../src/rpc.js';
 import { scan } from '../src/scan.js';
 import { isAddress } from '../src/hex.js';
 import { renderReport, toJSON, toMarkdown } from '../src/format.js';
+import { readFileSync } from 'node:fs';
+
+const { version: VERSION } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 
 const HELP = `approvalscan — find every token & NFT approval your wallet still has live, and which ones to revoke.
 
@@ -19,6 +22,7 @@ Options
       --fail-on <lvl>  exit 2 if any approval is at/above high|medium (for CI)
       --json           machine-readable output
       --markdown       markdown table (great for GitHub job summaries)
+  -v, --version        print the version and exit
   -h, --help           show this help
 
 Read-only: approvalscan never asks for a key and never signs anything.
@@ -31,6 +35,7 @@ function parse(argv) {
     const a = argv[i];
     const next = () => { if (i + 1 >= argv.length) throw new Error(`${a} needs a value`); return argv[++i]; };
     if (a === '-h' || a === '--help') o.help = true;
+    else if (a === '-v' || a === '--version') o.version = true;
     else if (a === '-c' || a === '--chain') o.chain = next();
     else if (a === '-d' || a === '--days') o.days = Number(next());
     else if (a === '--rpc') o.rpc = next();
@@ -48,6 +53,7 @@ function parse(argv) {
 async function main() {
   let o;
   try { o = parse(process.argv.slice(2)); } catch (e) { console.error(e.message); process.exit(1); }
+  if (o.version) { console.log(`approvalscan ${VERSION}`); process.exit(0); }
   if (o.help || !o.address) { console.log(HELP); process.exit(o.help ? 0 : 1); }
   if (!isAddress(o.address)) { console.error('not an EVM address: ' + o.address); process.exit(1); }
   if (!(o.days > 0)) { console.error('--days must be a positive number'); process.exit(1); }
