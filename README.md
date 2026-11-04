@@ -51,6 +51,7 @@ approvalscan 0xYourWallet -c all --json          # everything, machine-readable
 approvalscan 0xYourWallet --calldata             # print revoke calldata for each approval
 approvalscan 0xYourWallet --fail-on high         # exit 2 if anything is HIGH (CI / cron)
 ETHERSCAN_API_KEY=xxx approvalscan 0xYourWallet  # full history on every chain
+approvalscan --version                           # print the installed version
 ```
 
 ## Run it from your phone (GitHub Actions)

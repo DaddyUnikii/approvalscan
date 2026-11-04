@@ -144,3 +144,13 @@ test('markdown report', async () => {
   assert.match(md, /\| 🔴 HIGH \| USDT \| Unlimited \|/);
   assert.match(md, /revoke\.cash/);
 });
+
+test('--version prints the package version', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const { readFileSync } = await import('node:fs');
+  const bin = new URL('../bin/approvalscan.js', import.meta.url).pathname;
+  const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+  for (const flag of ['-v', '--version']) {
+    assert.equal(execFileSync(process.execPath, [bin, flag], { encoding: 'utf8' }).trim(), `approvalscan ${pkg.version}`);
+  }
+});

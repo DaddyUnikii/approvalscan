@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `-v` / `--version` prints the installed version and exits (handy for bug reports and CI logs).
+
 ## 0.1.0 — 2026-10-26
 
 - First release: scan live ERC-20 allowances, ERC-721 single approvals and `setApprovalForAll` on BSC, Ethereum, Base, Arbitrum, Optimism and Polygon.
